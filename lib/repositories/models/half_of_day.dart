@@ -1,3 +1,0 @@
-enum HalfOfDay {
-  day, night
-}
