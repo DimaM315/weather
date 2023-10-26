@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:you_weather/features/widgets/city_weather_widget.dart';
-import 'package:you_weather/repositories/models/models.dart';
+import 'package:you_weather/repositories/models/city_models.dart';
 import 'package:you_weather/repositories/weather_repo.dart';
 
 class CurrentUserWeatherScreen extends StatefulWidget {
   const CurrentUserWeatherScreen({super.key});
+  
 
   @override
   State<CurrentUserWeatherScreen> createState() => _CurrentUserWeatherScreenState();
@@ -14,6 +15,7 @@ class CurrentUserWeatherScreen extends StatefulWidget {
 class _CurrentUserWeatherScreenState extends State<CurrentUserWeatherScreen> {
   City? _currentUserCity;
   bool _failOfGetUserPosition = false;
+  final WeatherRepo _weatherRepo = WeatherRepo.instance;
 
   @override
   void initState() {
@@ -28,7 +30,7 @@ class _CurrentUserWeatherScreenState extends State<CurrentUserWeatherScreen> {
       ),
       body: (_currentUserCity == null && !_failOfGetUserPosition) 
         ? const Center(child: CircularProgressIndicator())
-        : _failOfGetUserPosition ? const Center( child: Text("Не удалось получить ваше местоположение!"))
+        : (_failOfGetUserPosition || _currentUserCity == null) ? const Center( child: Text("Не удалось получить ваше местоположение!"))
         : CityWeatherWidget(cityWeather: _currentUserCity!.cityWeatherList[0]),
       floatingActionButton: FloatingActionButton(
         onPressed: _loadCurrentUserCityWeather,
@@ -40,7 +42,7 @@ class _CurrentUserWeatherScreenState extends State<CurrentUserWeatherScreen> {
 
   Future<void> _loadCurrentUserCityWeather() async {
     try {
-      _currentUserCity = await WeatherRepo().getCurrentUserCityWeather();
+      _currentUserCity = await _weatherRepo.getCurrentUserCityWeather();
       _failOfGetUserPosition = false;
     } catch (e) {
       debugPrint("Не удалось получить местоположение пользователя! $e");
@@ -48,5 +50,4 @@ class _CurrentUserWeatherScreenState extends State<CurrentUserWeatherScreen> {
     }
     setState(() {});
   }
-
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:you_weather/features/widgets/app_bar_fav_page_container.dart';
 import 'package:you_weather/features/widgets/fav_cities_list.dart';
-import 'package:you_weather/repositories/models/models.dart';
+import 'package:you_weather/repositories/models/city_models.dart';
 import 'package:you_weather/repositories/weather_repo.dart';
 
 class FavCitiesScreen extends StatefulWidget {
@@ -13,6 +13,7 @@ class FavCitiesScreen extends StatefulWidget {
 
 class _FavCitiesScreenState extends State<FavCitiesScreen> {
   List<City>? _citiesList;
+  final WeatherRepo _weatherRepo = WeatherRepo.instance;
 
   @override
   void initState() {
@@ -38,7 +39,7 @@ class _FavCitiesScreenState extends State<FavCitiesScreen> {
   }
 
   Future<void> _loadCitiesWeather() async {
-    _citiesList = await WeatherRepo().getCitiesList();
+    _citiesList = await _weatherRepo.getCitiesList();
     setState(() {});
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:you_weather/features/widgets/city_weather_widget.dart';
-import 'package:you_weather/repositories/models/models.dart';
+import 'package:you_weather/repositories/models/city_models.dart';
+import 'package:you_weather/repositories/models/city_weather_models.dart';
 
 
 class CityScreen extends StatelessWidget {

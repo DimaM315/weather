@@ -1,9 +1,16 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:you_weather/repositories/data_provider.dart';
-import 'package:you_weather/repositories/models/models.dart';
+import 'package:you_weather/repositories/models/city_models.dart';
+import 'package:you_weather/repositories/models/city_weather_models.dart';
 
 class WeatherRepo {
-  DataProvider dataProvider = DataProvider();
-  List<City> favCitiesList = [
+  WeatherRepo._internal();
+  static final WeatherRepo _instance = WeatherRepo._internal();
+  static WeatherRepo get instance => _instance;
+
+
+  final DataProvider dataProvider = DataProvider();
+  final List<City> favCitiesList = [
     City(name: "London", lat: 51.5074, lon: -0.1278),
     City(name: "Sant-Peterburg", lat:59.93863, lon: 30.31413),
     City(name: "Moscow", lat:55.75222, lon: 37.61556),
@@ -13,25 +20,30 @@ class WeatherRepo {
 
   Future<List<City>> getCitiesList() async {
     for (City city in favCitiesList) {
-      Map<String, dynamic> rawData = await dataProvider.getRawWeatherData(city.lat, city.lon);
+      final Map<String, dynamic> rawData = await dataProvider.getRawWeatherData(city.lat, city.lon);
       city.addCityWeather(_getCityWeatherFromRawData(rawData));
     }
     return favCitiesList;
   }
 
   Future<City> getCurrentUserCityWeather() async {
-    Map<String, double> userPosition;
-    userPosition = await dataProvider.getCurrentUserPosition();
-    Map<String, dynamic> rawData = await dataProvider.getRawWeatherData(userPosition['lat']!, userPosition['lon']!);
-
-    City city = City(name: rawData['timezone'].toString().split('/')[1], lat: userPosition['lat']!, lon: userPosition['lon']!);
+    final Position userPosition = await dataProvider.getCurrentUserPosition();
+    final Map<String, dynamic> rawData = await dataProvider.getRawWeatherData(
+      userPosition.latitude, 
+      userPosition.longitude
+    );
+    final City city = City(
+      name: rawData['timezone'].toString().split('/')[1], 
+      lat: userPosition.latitude, 
+      lon: userPosition.longitude,
+    );
     city.addCityWeather(_getCityWeatherFromRawData(rawData));
 
     return city;
   }
 
   Future<List<CityWeather>> getFavCitiesWeatherList() async {
-    List<CityWeather> favCitiesWeatherList = [];
+    final List<CityWeather> favCitiesWeatherList = [];
     for (var city in favCitiesList) {
       Map<String, dynamic> rawData = await dataProvider.getRawWeatherData(city.lat, city.lon);
       favCitiesWeatherList.add(_getCityWeatherFromRawData(rawData));

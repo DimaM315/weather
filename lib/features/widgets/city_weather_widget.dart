@@ -15,15 +15,15 @@ class CityWeatherWidget extends StatelessWidget {
     return DecoratedBox(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage("background/day.png"), 
+            image: AssetImage("assets/background/day.png"), 
             fit: BoxFit.cover
           ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const TitleWeatherPage(),
-          NavBarRow(),
+          const TitleWeatherPage(title:"Weather details"),
+          const NavBarRow(),
           MainParamsWeatherBlock(cityWeather: cityWeather),
           AdditionalParamsWeatherBlock(
             params: {
@@ -43,8 +43,6 @@ class CityWeatherWidget extends StatelessWidget {
       )
     );
   }
-  
-  void openFullWeatherInfo() {}
 }
 
 
@@ -53,7 +51,7 @@ class NavBarRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var buttonTheme = ButtonStyle(
+    final ButtonStyle buttonTheme = ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.purple),
             foregroundColor: MaterialStateProperty.all(Colors.white),
             overlayColor:  MaterialStateProperty.all(Colors.purpleAccent),
@@ -66,32 +64,33 @@ class NavBarRow extends StatelessWidget {
                 onPressed: () {
                   // Кнопка нажата.
                 },
-                child: Text('Now'),
                 autofocus: true,
                 //tooltip: const Text("Weather at the moment"),
                 style: buttonTheme,
+                child: const Text('Now'),
               ),
               ElevatedButton(
                 onPressed: () {
                   // Кнопка нажата.
                 },
-                child: Text('3 days'),
                 style: buttonTheme,
+                child: const Text('3 days'),
               ),
               ElevatedButton(
                 onPressed: () {
                   // Кнопка нажата.
                 },
-                child: Text('7 days'),
                 style: buttonTheme,
-              ),              
+                child: const Text('7 days'),
+              ),
       ],
     );
   }
 }
 
 class TitleWeatherPage extends StatelessWidget {
-  const TitleWeatherPage({super.key});
+  const TitleWeatherPage({super.key, required this.title});
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +98,7 @@ class TitleWeatherPage extends StatelessWidget {
     return Center(
       heightFactor: 2,
       child: Text(
-        "Weather detail", 
+        title, 
         style: theme.textTheme.labelLarge, 
       ),
     );
@@ -143,7 +142,7 @@ class AdditionalParamsWeatherBlock extends StatelessWidget {
   const AdditionalParamsWeatherBlock({super.key,
   required this.params,
   });
-  final Map<String, String>params;
+  final Map<String, String> params;
 
   @override
   Widget build(BuildContext context) {
@@ -173,14 +172,14 @@ class AdditionalParamsWeatherItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(paramsName),
-                  Text(paramsValue, style: theme.textTheme.labelMedium,),
-                ]
-              ),
-            );
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(paramsName),
+          Text(paramsValue, style: theme.textTheme.labelMedium,),
+        ]
+      ),
+    );
   }
 }

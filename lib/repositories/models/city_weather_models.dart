@@ -31,15 +31,16 @@ class CityWeather {
   
 
   String getClimateIconUrl() {
-    return "climate_icons/$climatIconTitle.svg";
+    return "assets/climate_icons/$climatIconTitle.svg";
   }
 
   String getUVStatus() {
+    if (UV == null) return "No data";
     try {
       int intUV = int.parse(UV!);
       return intUV < 3 ? "Lowest" : intUV > 6 ? "Normal" : "High";
     } catch (e) {
-      debugPrint("$e");
+      debugPrint("getUVStatus() $e UV: $UV");
       return "No data";
     }
   }

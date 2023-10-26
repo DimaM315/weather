@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:you_weather/features/widgets/city_tile.dart';
-import 'package:you_weather/repositories/models/models.dart';
+import 'package:you_weather/repositories/models/city_models.dart';
 
 class FavCitiesList extends StatelessWidget {
   const FavCitiesList({
@@ -15,16 +15,18 @@ class FavCitiesList extends StatelessWidget {
     return DecoratedBox(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage("background/day.png"), 
+            image: AssetImage("assets/background/day.png"), 
             fit: BoxFit.cover
           ),
       ),
       child:ListView.separated(
         padding: const EdgeInsets.only(top:15, left: 35, right: 35),
         separatorBuilder: (context, index) => const Divider(),
-        itemCount: _cityList!.length,
+        itemCount: _cityList == null ? 0 : _cityList!.length,
         itemBuilder: (context, index) {
-          return CityTile(city: _cityList![index]);     
+          return CityTile(
+            city: _cityList![index]
+          );     
         },
       )
     );

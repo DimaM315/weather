@@ -15,15 +15,11 @@ class AppBarFavPageContainer extends StatelessWidget {
             Container(
               width: 10,
             ),
-            Container(
-              child: const Text('Select city'),
-            ),
-            Container(
-              child: SvgPicture.asset(
-                "plus.svg",
-                height: 30,
-                width: 30,
-              ),
+            const Text('Select city'),
+            SvgPicture.asset(
+              "plus.svg",
+              height: 30,
+              width: 30,
             )
           ]
         ), 

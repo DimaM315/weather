@@ -26,4 +26,23 @@ flutter:
 
   assets:
     - assets/
+    - assets/background/day.png
+    - assets/climate_icons/01d.svg
+    - assets/climate_icons/01n.svg
+    - assets/climate_icons/02d.svg
+    - assets/climate_icons/02d.svg
+    - assets/climate_icons/03d.svg
+    - assets/climate_icons/03d.svg
+    - assets/climate_icons/04d.svg
+    - assets/climate_icons/04d.svg
+    - assets/climate_icons/09d.svg
+    - assets/climate_icons/09d.svg
+    - assets/climate_icons/10d.svg
+    - assets/climate_icons/10d.svg
+    - assets/climate_icons/11d.svg
+    - assets/climate_icons/11d.svg
+    - assets/climate_icons/13d.svg
+    - assets/climate_icons/13d.svg
+    - assets/climate_icons/50d.svg
+    - assets/climate_icons/50d.svg
   
